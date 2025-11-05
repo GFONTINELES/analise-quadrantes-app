@@ -17,7 +17,7 @@ df_filtrado = []
 # ===============================
 # CONFIGURAÇÃO DO CAMINHO BASE
 # ===============================
-BASE_DIR = r"C:\Users\FERREIRA\OneDrive\teste leitura\exports"
+BASE_DIR = "https://raw.githubusercontent.com/GFONTINELES/analise-quadrantes-app/main"
 
 # MAPA DE ANALISTAS E LOJAS
 ANALISTAS = {
@@ -148,9 +148,12 @@ if menu_select ==  "Geral":
      
 
     #C:\Users\Ferreira\OneDrive\Analises quadrantes\Lucas  
-    df_LUCAS = pd.read_parquet(rf"C:\Users\FERREIRA\OneDrive\teste leitura\exports\{data_escolhida}\LUCAS_consolidado.parquet")
-    df_Gabriel = pd.read_parquet(rf"C:\Users\FERREIRA\OneDrive\teste leitura\exports\{data_escolhida}\GABRIEL_consolidado.parquet")
-    df_Bruno = pd.read_parquet(rf"C:\Users\FERREIRA\OneDrive\teste leitura\exports\{data_escolhida}\BRUNO_consolidado.parquet")
+    url_LUCAS = "https://raw.githubusercontent.com/GFONTINELES/analise-quadrantes-app/main/LUCAS_consolidado.parquet"
+    df_LUCAS = pd.read_parquet(url_LUCAS)
+    url_gabriel = "https://raw.githubusercontent.com/GFONTINELES/analise-quadrantes-app/main/GABRIEL_consolidado.parquet"
+    df_Gabriel = pd.read_parquet(url_gabriel)
+    url_bruno = "https://raw.githubusercontent.com/GFONTINELES/analise-quadrantes-app/main/BRUNO_consolidado.parquet"
+    df_Bruno = pd.read_parquet(url_bruno)
 
     df_final = pd.concat([df_LUCAS,df_Gabriel,df_Bruno],axis=0) 
     
@@ -511,9 +514,13 @@ else:
                            
     #df_final = pd.read_parquet(rf"C:\Users\FERREIRA\OneDrive\teste leitura\exports\{data_escolhida}\{analista}_consolidado.parquet")
     
-    df_LUCAS = pd.read_parquet(rf"C:\Users\FERREIRA\OneDrive\teste leitura\exports\{data_escolhida}\LUCAS_consolidado.parquet")
-    df_Gabriel = pd.read_parquet(rf"C:\Users\FERREIRA\OneDrive\teste leitura\exports\{data_escolhida}\GABRIEL_consolidado.parquet")
-    df_Bruno = pd.read_parquet(rf"C:\Users\FERREIRA\OneDrive\teste leitura\exports\{data_escolhida}\BRUNO_consolidado.parquet")
+    #C:\Users\Ferreira\OneDrive\Analises quadrantes\Lucas  
+    url_LUCAS = "https://raw.githubusercontent.com/GFONTINELES/analise-quadrantes-app/main/LUCAS_consolidado.parquet"
+    df_LUCAS = pd.read_parquet(url_LUCAS)
+    url_gabriel = "https://raw.githubusercontent.com/GFONTINELES/analise-quadrantes-app/main/GABRIEL_consolidado.parquet"
+    df_Gabriel = pd.read_parquet(url_gabriel)
+    url_bruno = "https://raw.githubusercontent.com/GFONTINELES/analise-quadrantes-app/main/BRUNO_consolidado.parquet"
+    df_Bruno = pd.read_parquet(url_bruno)
 
     df_final = pd.concat([df_LUCAS,df_Gabriel,df_Bruno],axis=0) 
         
@@ -527,9 +534,12 @@ else:
 
     #df_final_2 = pd.read_parquet(rf"C:\Users\FERREIRA\OneDrive\teste leitura\exports\{dia_anterior_str}\{analista}_consolidado.parquet")
     
-    df_Lucas_2 = pd.read_parquet(rf"C:\Users\FERREIRA\OneDrive\teste leitura\exports\{dia_anterior_str}\LUCAS_consolidado.parquet")
-    df_Gabriel_2 = pd.read_parquet(rf"C:\Users\FERREIRA\OneDrive\teste leitura\exports\{dia_anterior_str}\GABRIEL_consolidado.parquet")
-    df_Bruno_2 = pd.read_parquet(rf"C:\Users\FERREIRA\OneDrive\teste leitura\exports\{dia_anterior_str}\BRUNO_consolidado.parquet")
+    url_LUCAS = "https://raw.githubusercontent.com/GFONTINELES/analise-quadrantes-app/main/LUCAS_consolidado.parquet"
+    df_Lucas_2 = pd.read_parquet(url_LUCAS)
+    url_gabriel = "https://raw.githubusercontent.com/GFONTINELES/analise-quadrantes-app/main/GABRIEL_consolidado.parquet"
+    df_Gabriel_2 = pd.read_parquet(url_gabriel)
+    url_bruno = "https://raw.githubusercontent.com/GFONTINELES/analise-quadrantes-app/main/BRUNO_consolidado.parquet"
+    df_Bruno_2 = pd.read_parquet(url_bruno)
 
     df_final_2 = pd.concat([df_Lucas_2,df_Gabriel_2,df_Bruno_2],axis=0) 
     df_final_2["quadrante"] = df_final_2["quadrante"].replace(quadrante_nomes)

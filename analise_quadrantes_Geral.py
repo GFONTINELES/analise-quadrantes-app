@@ -62,34 +62,38 @@ def read_parquet_from_url(url: str) -> pd.DataFrame:
 # FUNÇÕES AUXILIARES (caching)
 # ===============================
 @st.cache_data
-def listar_datas_online(days_back: int = 30) -> List[str]:
+def listar_datas_online() -> List[str]:
     """
-    Tenta detectar pastas de data no repositório GitHub, assumindo estrutura:
-    BASE_URL/exports/YYYY-MM-DD/<NOME_arquivo>.parquet
-    Verifica existência de LUCAS_consolidado.parquet como verificação.
-    Retorna lista de datas encontradas (strings YYYY-MM-DD) ordenadas desc.
-    Se não encontrar nada, retorna ["main"] (uso dos arquivos no root).
+    Lista automaticamente todas as pastas de data disponíveis no GitHub.
+    Supõe que a estrutura é:
+    https://github.com/GFONTINELES/analise-quadrantes-app/tree/main/exports/YYYY-MM-DD/
+    
+    Retorna uma lista de strings (datas no formato YYYY-MM-DD),
+    ordenadas da mais recente para a mais antiga.
     """
-    found = []
-    today = datetime.utcnow().date()
-    for i in range(days_back + 1):
-        d = today - timedelta(days=i)
-        ds = d.strftime("%Y-%m-%d")
-        url_check = f"{EXPORTS_PREFIX}/{ds}/LUCAS_consolidado.parquet"
-        try:
-            r = requests.head(url_check, timeout=8)
-            if r.status_code == 200:
-                found.append(ds)
-        except requests.RequestException:
-            # ignorar problemas de rede breves
-            pass
-    if not found:
-        # as fallback, checar se os arquivos estão no root (main)
-        # retornamos "main" para indicar uso do root (BASE_URL)
+    try:
+        html_url = "https://github.com/GFONTINELES/analise-quadrantes-app/tree/main/exports"
+        resp = requests.get(html_url, timeout=15)
+        resp.raise_for_status()
+        html = resp.text
+
+        # Detecta subpastas que seguem o padrão de data
+        possible_folders = []
+        for line in html.splitlines():
+            if "/exports/" in line and "href" in line:
+                parts = line.split("/exports/")[-1].split('"')[0].split("/")
+                if len(parts) > 0:
+                    folder = parts[0]
+                    if len(folder) == 10 and folder[4] == "-" and folder[7] == "-":
+                        possible_folders.append(folder)
+
+        # Remove duplicadas e ordena
+        datas = sorted(list(set(possible_folders)), reverse=True)
+        return datas if datas else ["main"]
+
+    except Exception as e:
+        st.warning(f"Falha ao listar pastas online: {e}")
         return ["main"]
-    # ordenar decrescente (mais recente primeiro)
-    found.sort(reverse=True)
-    return found
 
 
 @st.cache_data

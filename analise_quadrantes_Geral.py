@@ -66,13 +66,13 @@ def listar_datas_online() -> List[str]:
     """
     Lista automaticamente todas as pastas de data disponíveis no GitHub.
     Supõe que a estrutura é:
-    https://github.com/GFONTINELES/analise-quadrantes-app/tree/main/exports/YYYY-MM-DD/
+    https://raw.githubusercontent.com/GFONTINELES/analise-quadrantes-app/main/YYYY-MM-DD/
     
     Retorna uma lista de strings (datas no formato YYYY-MM-DD),
     ordenadas da mais recente para a mais antiga.
     """
     try:
-        html_url = "https://github.com/GFONTINELES/analise-quadrantes-app/tree/main/exports"
+        html_url = "https://raw.githubusercontent.com/GFONTINELES/analise-quadrantes-app/main/YYYY-MM-DD/"
         resp = requests.get(html_url, timeout=15)
         resp.raise_for_status()
         html = resp.text

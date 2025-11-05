@@ -102,18 +102,18 @@ def listar_arquivos_online(data_label: str) -> List[str]:
     if data_label == "main":
         # arquivos esperados no root
         urls = [
-            f"{BASE_URL}/LUCAS_consolidado.parquet",
-            f"{BASE_URL}/GABRIEL_consolidado.parquet",
-            f"{BASE_URL}/BRUNO_consolidado.parquet",
-        ]
-    else:
-        # verifica folder por data
-        urls = [
             f"{EXPORTS_PREFIX}/{data_label}/LUCAS_consolidado.parquet",
             f"{EXPORTS_PREFIX}/{data_label}/GABRIEL_consolidado.parquet",
             f"{EXPORTS_PREFIX}/{data_label}/BRUNO_consolidado.parquet",
         ]
-    # checar existência (HEAD) e devolver somente os que existem
+    else:
+        # verifica folder por data
+        urls = [
+            f"{BASE_URL}/LUCAS_consolidado.parquet",
+            f"{BASE_URL}/GABRIEL_consolidado.parquet",
+            f"{BASE_URL}/BRUNO_consolidado.parquet",
+        ]
+    # checar existência (HEAD) e devolver somente os que existem    
     valid = []
     for u in urls:
         try:

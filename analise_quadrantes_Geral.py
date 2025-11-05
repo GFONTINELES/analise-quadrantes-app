@@ -170,9 +170,12 @@ if menu_select ==  "Geral":
     data_escolhida_dt = pd.to_datetime(data_escolhida)
     dia_anterior_str = dia_anterior.strftime("%Y-%m-%d")
 
-    df_Lucas_2 = pd.read_parquet(rf"C:\Users\FERREIRA\OneDrive\teste leitura\exports\{dia_anterior_str}\LUCAS_consolidado.parquet")
-    df_Gabriel_2 = pd.read_parquet(rf"C:\Users\FERREIRA\OneDrive\teste leitura\exports\{dia_anterior_str}\GABRIEL_consolidado.parquet")
-    df_Bruno_2 = pd.read_parquet(rf"C:\Users\FERREIRA\OneDrive\teste leitura\exports\{dia_anterior_str}\BRUNO_consolidado.parquet")
+    url_LUCAS = "https://raw.githubusercontent.com/GFONTINELES/analise-quadrantes-app/main/LUCAS_consolidado.parquet"
+    df_Lucas_2 = pd.read_parquet(url_LUCAS)
+    url_gabriel = "https://raw.githubusercontent.com/GFONTINELES/analise-quadrantes-app/main/GABRIEL_consolidado.parquet"
+    df_Gabriel_2 = pd.read_parquet(url_gabriel)
+    url_bruno = "https://raw.githubusercontent.com/GFONTINELES/analise-quadrantes-app/main/BRUNO_consolidado.parquet"
+    df_Bruno_2 = pd.read_parquet(url_bruno)
 
     df_final_2 = pd.concat([df_Lucas_2,df_Gabriel_2,df_Bruno_2],axis=0) 
     
@@ -502,7 +505,8 @@ else:
     
     if data_escolhida:
         analista = st.selectbox("Analistas:", list(ANALISTAS.keys()))
-        data_path = os.path.join(BASE_DIR, data_escolhida)
+        data_path = f"{BASE_DIR}/{data_escolhida}"
+
 
         arquivos = listar_arquivos(data_path)
         arquivos_filtrados = filtrar_planilhas_por_analista(arquivos, analista)
